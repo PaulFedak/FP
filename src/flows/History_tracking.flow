@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>53.0</apiVersion>
+    <decisions>
+        <name>If_is_changed</name>
+        <label>If is changed</label>
+        <locationX>477</locationX>
+        <locationY>137</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Changed</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Date_time_of_Flight__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Record__Prior.Date_time_of_Flight__c</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>New_History_message</targetReference>
+            </connector>
+            <label>Changed</label>
+        </rules>
+    </decisions>
+    <interviewLabel>History {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>History tracking</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>FREE_FORM_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>New_History_message</name>
+        <label>New History message</label>
+        <locationX>678</locationX>
+        <locationY>136</locationY>
+        <inputAssignments>
+            <field>Flight_Info__c</field>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Message__c</field>
+            <value>
+                <stringValue>Flght info was changed from {!$Record__Prior.Date_time_of_Flight__c} -----to----{!$Record.Date_time_of_Flight__c}</stringValue>
+            </value>
+        </inputAssignments>
+        <object>History__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <start>
+        <locationX>48</locationX>
+        <locationY>50</locationY>
+        <connector>
+            <targetReference>If_is_changed</targetReference>
+        </connector>
+        <object>Flight_Info__c</object>
+        <recordTriggerType>Update</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>

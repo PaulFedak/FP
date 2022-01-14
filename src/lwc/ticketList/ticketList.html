@@ -1,0 +1,21 @@
+<template>
+    <lightning-card title='Your Tickets'>
+        <template if:true={tickets.data}>
+            <ul class='slds-p-left_medium'>
+                <template for:each={tickets.data} for:item='ticket'>
+                    <li key={ticket.Id} class='slds-p-bottom_medium'>
+                        <b>Name: </b> {ticket.Name}<br>
+                        <b>Destination: </b> {ticket.Flight_Info_Id__r.Destination__c}<br>
+                        <b>Departure: </b> {ticket.Flight_Info_Id__r.Departure__c}<br>
+                        <b>Flight start time: </b> {ticket.Flight_Info_Id__r.Date_time_of_Flight__c}<br>
+                        <b>Flight finish time: </b> {ticket.Flight_Info_Id__r.Finish_flight_time__c}<br>
+                        <b>Status: </b> {ticket.Status__c}<br>
+                            <lightning-button label='Return' variant="brand" onclick={ticketReturn}
+                                              data-id={ticket.Id}
+                                              disabled={disabled}></lightning-button>
+                    </li>
+                </template>
+            </ul>
+        </template>
+    </lightning-card>
+</template>

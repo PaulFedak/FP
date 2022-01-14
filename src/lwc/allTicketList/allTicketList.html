@@ -1,0 +1,117 @@
+<template>
+    <lightning-card title='Sky Company Tickets'>
+        <lightning-layout multiple-rows>
+            <lightning-layout-item
+                    size="12"
+                    padding="around-small"
+            >
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                    <thead>
+                    <tr class="slds-line-height_reset">
+                        <td
+                                scope="col"
+                                style="width: 20px"
+                        >
+                            <lightning-button-icon
+                                    variant="base"
+                                    size="small"
+                                    icon-name="utility:clear"
+                                    alternative-text="Clear Search"
+                                    onclick={clearSearch}
+                            ></lightning-button-icon>
+                        </td>
+                        <td scope="col">
+                            <lightning-input
+                                    type="text"
+                                    variant="standard"
+                                    name="destination"
+                                    value={destination}
+                                    label="Search departure"
+                                    placeholder="Search destination..."
+                                    onkeyup={handleKeyUp}
+                            ></lightning-input>
+                        </td>
+                        <td scope="col">
+                            <lightning-input
+                                    type="text"
+                                    variant="standard"
+                                    name="departure"
+                                    value={departure}
+                                    label="Search destination"
+                                    placeholder="Search departure..."
+                                    onkeyup={handleKeyUp}
+                            ></lightning-input>
+                        </td>
+                        <td scope="col">
+                            <lightning-combobox
+                                    name="recordType"
+                                    label="Class"
+                                    value={value}
+                                    placeholder="Select class"
+                                    options={options}
+                                    onchange={handleChange}>
+                            </lightning-combobox>
+                        </td>
+                    </tr>
+                    <tr class="slds-line-height_reset">
+                        <th scope="col">Index</th>
+                        <th scope="col">Departure</th>
+                        <th scope="col">Destination</th>
+                        <th scope="col">Date start flight</th>
+                        <th scope="col">Price $</th>
+                        <th scope="col">Buy ticket</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                            class="slds-hint-parent"
+                            for:each={searchable}
+                            for:item="item"
+                            key={item.Id}
+                    >
+                        <td scope="col">{item.index}</td>
+                        <th scope="row">
+                            <a
+                                    href="#"
+                                    onclick={handleNavigate}
+                                    data-id={item.caseData.Id}
+                            >{item.caseData.Flight_Info_Id__r.Departure__c}
+                            </a>
+                        </th>
+                        <th scope="row">
+                            <a
+                                    href="#"
+                                    onclick={handleNavigate}
+                                    data-id={item.caseData.Id}
+                            >{item.caseData.Flight_Info_Id__r.Destination__c}
+                            </a>
+                        </th>
+                        <th scope="row">
+                            <a
+                                    href="#"
+                                    onclick={handleNavigate}
+                                    data-id={item.caseData.Id}
+                            >{item.caseData.Flight_Info_Id__r.Date_time_of_Flight__c}
+                            </a>
+                        </th>
+                        <th scope="row">
+                            <a
+                                    href="#"
+                                    onclick={handleNavigate}
+                                    data-id={item.caseData.Id}
+                            >{item.caseData.Price__c}
+                            </a>
+                        </th>
+                        <th scope="row" class='slds-p-left_small'>
+                            <lightning-button label='Buy' variant="brand" onclick={buyTicket}
+                                              data-id={item.caseData.Id}
+                                              disabled={disabled}></lightning-button>
+                        </th>
+                    </tr>
+                    </tbody>
+                </table>
+            </lightning-layout-item>
+        </lightning-layout>
+    </lightning-card>
+</template>
